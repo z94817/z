@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>博多Pos组KPI考核</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/tab.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/posServer.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#q1").click(function() {
+			$(".choose1").removeClass("active");
+			$("#q1").addClass("active");
+			$("#t1").css('margin-top', '0');
+			$("#title2").fadeOut(0);
+			$(".view1").fadeOut(0);
+			$("#titel").html("员工业绩").fadeIn(200);
+			$("#sel1").fadeIn(200);
+		});
+		$("#q2").click(function() {
+			$(".choose1").removeClass("active");
+			$("#q2").addClass("active");
+			$("#t1").css('margin-top', '0');
+			$("#title2").fadeOut(0);
+			$(".view1").fadeOut(0);
+			$("#titel").html("子公司-员工对应表").fadeIn(200);
+			$("#sel2").fadeIn(200);
+		});
+		$("#q3").click(function() {
+			$(".choose1").removeClass("active");
+			$("#q3").addClass("active");
+			$("#t1").css('margin-top', '0');
+			$("#title2").fadeOut(0);
+			$(".view1").fadeOut(0);
+			$("#titel").html("子公司列表").fadeIn(200);
+			$("#sel3").fadeIn(200);
+		});
+		$("#q4").click(function() {
+			$(".choose1").removeClass("active");
+			$("#q4").addClass("active");
+			$("#t1").css('margin-top', '0');
+			$("#title2").fadeOut(0);
+			$(".view1").fadeOut(0);
+			$("#titel").html("员工列表").fadeIn(200);
+			$("#sel4").fadeIn(200);
+		});
+		$("#cdate").click(function() {
+			$("#date").fadeIn(0);
+		});
+		$("#datetimepicker").datetimepicker({  
+	         format: 'yyyymm',  
+	         weekStart: 1,  
+	         autoclose: true,  
+	         startView: 3,  
+	         minView: 3,  
+	         forceParse: false,  
+	         language: 'cn'  
+   		 });
+   		 
+   		  $("#q1,#q2,#q3,#q4").click(function () {
+		      $("#bs-example-navbar-collapse-1").collapse('hide');
+		    });
+		    //滚动屏幕时，把导航选项折叠起来
+	  	  $(window).scroll(function () {
+	     	 $("#bs-example-navbar-collapse-1").collapse('hide');
+	   	  });
+	   	  
+	   	  $("#goPic").click(function(){
+	   	  	$("#pic").click();
+	   	  });
+	   	  
+	   	  $("#pic").change(function(){
+	   	  	var file = document.getElementById('pic').files[0];
+	        //判断文件大小
+	        if(file.size >= 2*1024*1024){
+	          alert("上传失败,请选择小于2M的图片");
+	          return;
+	        }
+	        var URL = window.URL;
+	        var imgURL = URL.createObjectURL(file);
+	        document.getElementById("userImg").src=imgURL;
+	        $("#userImg").fadeIn(0);
+	   	  });
+	   	  
+	   	  $("#addu").click(function(){
+	   	  	 $("#userImg").attr("src","");
+	   	  	 $("#userImg").fadeOut(0);
+	   	  });
+   		 
+	});
+	
+	$(window).scroll(function () {
+		  //小屏幕下的导航条折叠
+		    //点击导航链接之后，把导航选项折叠起来
+		    $("#q1,#q2,#q3,#q4").click(function () {
+		      $("#bs-example-navbar-collapse-1").collapse('hide');
+		    });
+		    //滚动屏幕时，把导航选项折叠起来
+		    $(window).scroll(function () {
+		      $("#bs-example-navbar-collapse-1").collapse('hide');
+		    });
+		}); 
+</script>
+	<style type="text/css">
+		/* div{border: 1px solid red;} */
+		td{text-align: center;}
+		body::-webkit-scrollbar{display:none;}
+	</style>
+</head>
+<body style="background-image: url('img/background_3.jpg');background-attachment:fixed; background-size:100%;" ng-app="posCli" ng-controller="posServer">
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">博多POS组KPI后台管理</span> <span class="icon-bar"></span>
+							<span class="icon-bar"></span> <span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"  onclick="location.reload()">博多POS组KPI后台管理</a>
+					</div>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							 <li class="choose1" id="q1" ng-click="sel1()"><a href="#">查询员工绩效<span class="caret"></a></li>
+							 <li class="choose1" id="q2" ng-click="sel2()"><a href="#">查询子公司-员工对应关系<span class="caret"></a></li>
+							 <li class="choose1" id="q3" ng-click="sel3()"><a href="#">查询子公司<span class="caret"></a></li>
+							 <li class="choose1" id="q4" ng-click="sel4()"><a href="#">查询员工<span class="caret"></a></li>
+						</ul>
+						<img width="180px" height="50px" src="img/logowhite.png" class="navbar-right">
+					</div>
+				</div>
+			</nav>
+		</div>
+		<hr><hr>
+		<div id="t1" style="margin-top: 225px;"><hr><h1 style="color:white;" align="center"><b id="titel">欢迎来到博多POS组绩效后台管理系统</b></h1><h6 id="title2" style="color:white;" align="center">点击上方导航栏开始</h6><hr></div>
+		<div id="sel1" style="display: none;" class="view1">
+			<span style="color: white;">*当前为
+				<font style="font-size: 25px"><b>{{showYear}}</b></font>：
+				<font style="font-size: 25px"><b>{{showMonth}}</b></font>绩效表<span style="color: white;" class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+			</span>
+			<a id="cdate" style="color: white;">选择日期:<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a><span style="color: white;" class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+			<a ng-click="sel1All()" style="color: white;">查看总表</a>
+		<div style="width: 50%;" class="input-group date form_date view1" id="date">  
+		    <input ng-model="datetime" ng-change="sel1()" name="startTm" id="datetimepicker" type='text' class="form-control input-xs" readonly="readonly" placeholder="点击这里选择日期"/>  
+		    <span href="" class="input-group-addon input-sm"><span class="glyphicon glyphicon-calendar"></span></span>
+		</div>
+			<table class="table table-bordered table-hover">
+				<tr class="info">
+					<td width="13%">ID</td>
+					<td width="18%">姓名</td>
+					<td width="13%">态度</td>
+					<td width="13%">及时</td>
+					<td width="13%">正确</td>
+					<td width="13%">总分</td>
+					<td width="13%">操作</td>
+				</tr>
+				<tr class="active" ng-repeat="user in UserWithGrade">
+					<td>{{user.uId}}</td>
+					<td>{{user.uName}}</td>
+					<td>{{user.attitude}}</td>
+					<td>{{user.time}}</td>
+					<td>{{user.correct}}</td>
+					<td>{{user.score}}</td>
+					<td><button ng-if="user.grades.length!=0" ng-click="checkTips($index)" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#GradeModal">详情</button></td>
+				</tr>
+			</table>
+		</div>
+		<div id="sel2" style="display: none;" class="view1">
+			<table class="table table-bordered table-hover" ng-repeat="sc in SubCompanyAndUser">
+					<tr class="info">
+						<td colspan="2" width="50%">子公司ID</td>
+						<td colspan="2" width="50%">子公司名称</td>
+					</tr>
+					<tr class="active" rep>
+						<td colspan="2">{{sc.cId}}</td>
+						<td colspan="2">{{sc.cName}}</td>
+					</tr>
+					<tr class="info">
+						<td width="25%">员工ID</td>
+						<td width="25%">员工名</td>
+						<td width="25%">员工职位</td>
+						<td width="25%">操作</td>
+					</tr>
+					<tr class="danger"><td colspan="4" data-toggle="modal" data-target="#cAuModal" ng-click="saveSubCompanyAndUser($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
+					<tr class="active" ng-repeat="user in sc.users">
+						<td>{{user.uId}}</td>
+						<td>{{user.uName}}</td>
+						<td>{{user.uWork}}</td>
+						<td><button ng-click="deleteSubCompanyAndUser(sc.cId,user.uId)" class="btn btn-danger btn-xs">删除</button></td>
+					</tr>
+			</table>
+		</div>
+		<div id="sel3" style="display: none;" class="view1">
+			<table class="table table-bordered table-hover">
+				<tr class="info">
+					<td width="25%">ID</td>
+					<td width="50%">名称</td>
+					<td width="25%">操作</td>
+				</tr>
+				<tr class="danger"><td colspan="3" data-toggle="modal" data-target="#SubCompanyModal" ng-click="updateSubCompany=null"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
+				<tr class="active" ng-repeat="sc in subcompanys">
+					<td>{{sc.cId}}</td>
+					<td>{{sc.cName}}</td>
+					<td><button ng-click="updateSubCompanys(subcompanys[$index])" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#SubCompanyModal">修改</button><button ng-click="deleteSubCompanys(sc.cId)" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#1myModal">删除</button></td>
+				</tr>
+				<tr>
+				
+			</table>
+		</div>
+		<div id="sel4" style="display: none;" class="view1">
+			<table class="table table-bordered table-hover">
+				<tr class="info">
+					<td width="20">ID</td>
+					<td width="20">姓名</td>
+					<td width="20">职位</td>
+					<td width="20">头像</td>
+					<td width="20">操作</td>
+				</tr>
+				<tr class="danger"><td id="addu" colspan="5" data-toggle="modal" data-target="#UserModal" ng-click="updateUser=null"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></td></tr>
+				<tr class="active" ng-repeat="user in users">
+					<td>{{user.uId}}</td>
+					<td>{{user.uName}}</td>
+					<td>{{user.uWork}}</td>
+					<td><img width="43px" height="60px" src="{{user.uImg}}"></td>
+					<td><button ng-click="updateUsers(users[$index])" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#UserModal">修改</button><button ng-click="deleteUsers(user.uId)" class="btn btn-danger btn-xs">删除</button></td>
+				</tr>
+				
+			</table>
+		</div>
+		<!--company Modal -->
+		<div class="modal fade" id="SubCompanyModal" tabindex="-1" role="dialog" aria-labelledby="SubCompanyModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="SubCompanyModalLabel">编辑子公司</h4>
+		      </div>
+		      <div class="modal-body">
+	             <form>
+			          <div class="form-group">
+			            <label for="subCompany-name" class="control-label">子公司名称：</label>
+			            <input ng-model="updateSubCompany.cName" type="text" class="form-control" id="subCompany-name">
+			          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		        <button type="button" class="btn btn-primary" ng-click="saveSubCompanys()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--user Modal -->
+		<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="UserModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="UserModalLabel">编辑员工</h4>
+		      </div>
+		      <div class="modal-body">
+	             <form>
+	            	<div class="form-group" style="text-align: center;">
+	             		<img id="userImg" width="120px" height="170px" src="{{updateUser.uImg}}"><br>
+	             		<button id="goPic" class="btn btn-default" style="margin-top: 10px">上传头像</button><input style="display: none;" id="pic" type="file" accept="image/gif,image/jpeg,image/jpg,image/png"/>
+	             	</div>
+			        <div class="form-group">
+			            <label for="user-name" class="control-label">员工姓名：</label>
+			            <input ng-model="updateUser.uName" type="text" class="form-control" id="user-name">
+			        </div>
+			        <div class="form-group">
+			            <label for="user-work" class="control-label">员工职位：</label>
+			            <input ng-model="updateUser.uWork" type="text" class="form-control" id="user-work">
+			        </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		        <button type="button" class="btn btn-primary" ng-click="saveUsers()" data-dismiss="modal">保存</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--c-u Modal -->
+		<div class="modal fade" id="cAuModal" tabindex="-1" role="dialog" aria-labelledby="ScAuModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class="modal-title" id="cAuModalLabel"><b>{{scANDu.cName}}</b></h3>
+		      </div>
+		      <div class="modal-body">
+		     	  <div class="form-group">
+		            <label class="control-label">服务中员工:</label>
+		          </div>
+		          <div class="form-group" ng-repeat="u in scANDu.users">
+		           	<span>id:<b>{{u.uId}}</b>-----姓名:<b>{{u.uName}}</b></span>
+		          </div>
+		          <hr>
+		     	  <div class="form-group">
+		            <label class="control-label">可添加员工:</label>
+		          </div>
+		          <div class="form-group" ng-repeat="us in scWITHOUTu">
+		           	<span>id:<b>{{us.uId}}</b>-----姓名:<b>{{us.uName}}</b></span><button ng-click="addScAndU(scANDu.cId,us.uId)" style="margin-left: 10px" type="button" class="btn btn-primary btn-xs">添加</button>
+		          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--Grade Modal -->
+		<div class="modal fade  bs-example-modal-lg" id="GradeModal" tabindex="-1" role="dialog" aria-labelledby="GradeModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="GradeModalLabel"><b>{{checkUser.uName}}</b>的评价详情</h4>
+		      </div>
+		      <div class="modal-body">
+		          <div class="form-group">
+		          <label for="Grade-name" class="control-label"><b>{{showMonth}}</b>评价数：<b>{{checkUser.num}}</b></label>
+					<table class="table table-bordered table-hover">
+						<tr class="info">
+							<td width="27%">公司</td>
+							<td width="13%">时间</td>
+							<td width="10%">态度</td>
+							<td width="10%">及时</td>
+							<td width="10%">正确</td>
+							<td width="30%">备注</td>
+						</tr>
+						<tr class="active" ng-repeat="grade in checkUser.grades">
+							<td>{{grade.cName}}</td>
+							<td>{{grade.pDate | date:'yyyy-MM-dd'}}</td>
+							<td>{{grade.pIndexAttitude}}</td>
+							<td>{{grade.pIndexTime}}</td>
+							<td>{{grade.pIndexCorrect}}</td>
+							<td>{{grade.pNote}}</td>
+						</tr>
+					</table>
+		          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</body>
+</html>
