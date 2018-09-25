@@ -1,0 +1,32 @@
+获取浏览器高度
+高度除以 每个格子的高度  -去标题高度(1) 再定义变量决定格子数量
+获取高度 除以2 定义 两个if每个的高度
+
+var high = window.screen.height;
+var h = ((high/65)-2).toFixed(0);
+
+去掉滚动功能直接全部显示(5个页面)
+
+修改密码 . do  加入session限制
+
+已登录 -- 访问 滚动页面 : 放行
+已登录 -- 访问 登录页面 : 
+
+
+
+select distinct pmdt006,imaal003,imaal004,ptqs.pmdsdocdt,ptqs.pmdt020,pmdu009,qcba022,qcba023,qcba027,pmdt054,pmdspstdt from (
+select pmdtdocno,pmdt006,imaal003,imaal004,pmdsdocdt,pmdu009,pmdu010,qcba022,qcba023,qcba027,pmdt020,pmdt054 from (
+select pmdtdocno,pmdt006,imaal003,imaal004,pmdsdocdt,pmdu009,pmdu010,pmdt020,pmdt054 from (
+select pmdtdocno,pmdt006,imaal003,imaal004,pmdsdocdt,pmdt020,pmdt054 from (
+select pmdtdocno,pmdt006,pmdsdocdt,pmdt020,pmdt054 from pmds_t pmt left join 
+pmdt_t pst on pmdtdocno = pmdsdocno where pmds000 = 1 and pmdssite = 2102 and pmdsstus = 'Y' and  
+(pmdt020 > pmdt054 or pmdscnfdt  >= trunc(sysdate)) and pmds011 <> 7 and pmdt020 - pmdt055 > 0) p 
+left join imaal_t i on p.pmdt006 = i.imaal001) pt left join pmdu_t pu on pmdtdocno = pmdudocno) ptq 
+left join qcba_t qc on ( ptq.pmdtdocno = qc.qcba001 and pmdt020 = qcba008 and pmdt006 = qcba010)) ptqs 
+left join  (select pmds006,pmdspstdt from pmds_t where pmds000 = 6) pst on ptqs.pmdtdocno = pst.pmds006 
+where (pmdspstdt >= trunc(sysdate) or pmdspstdt is null )  order by pmdsdocdt desc;
+
+
+德清工厂 2001
+
+佳禾工厂 2003
